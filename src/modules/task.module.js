@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
-const Task = sequelize.define('Task', {
+const modelTask = sequelize.define('Task', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -22,4 +22,4 @@ const Task = sequelize.define('Task', {
   },
 });
 
-module.exports = Task;
+export default modelTask;

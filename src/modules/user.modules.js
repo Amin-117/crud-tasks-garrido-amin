@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database";
+import sequelize from "../config/database.js";
 
 const moldelUser = sequelize.define('User', {
   id: {
@@ -22,4 +22,4 @@ const moldelUser = sequelize.define('User', {
   },
 });
 
-export default User;
+export default moldelUser;

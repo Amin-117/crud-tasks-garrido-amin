@@ -1,19 +1,27 @@
-import modelTask from "../models/task.models.js";
+import TaskModel from "../models/task.models.js";
+import UserModel from "../models/user.models.js";
 
 export const createTask = async (req, res) => {
-  const { title, description, isComplete } = req.body;
+  const { title, description, isComplete, userId } = req.body;
 
   try {
-    if (!title || !description) {
-      return res.status(400).json({ message: "Los campos 'title' y 'description' son obligatorios" });
+    if (!title || !description || !userId) {
+      return res.status(400).json({ message: "Los campos 'title', 'description' y 'userId' son obligatorios" });
     }
 
-    const taskExist = await modelTask.findOne({ where: { title } });
+    const user = await UserModel.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "No se encontró el usuario asociado" });
+    }
+
+    const taskExist = await TaskModel.findOne({ where: { title } });
     if (taskExist) {
       return res.status(400).json({ message: "Ya existe una tarea con ese título" });
     }
 
-    const task = await modelTask.create({ title, description, isComplete });
+    // Crear la tarea asociada al usuario
+    const task = await user.createTask({ title, description, isComplete });
+
     return res.status(201).json(task);
   } catch (error) {
     console.error(error);
@@ -23,7 +31,9 @@ export const createTask = async (req, res) => {
 
 export const getAllTasks = async (req, res) => {
   try {
-    const tasks = await modelTask.findAll();
+    const tasks = await TaskModel.findAll({
+      include: [{ model: UserModel, as: "author", attributes: ["id", "name", "email"] }]
+    });
     return res.status(200).json(tasks);
   } catch (error) {
     console.error(error);
@@ -31,10 +41,12 @@ export const getAllTasks = async (req, res) => {
   }
 };
 
-
 export const getTaskById = async (req, res) => {
   try {
-    const task = await modelTask.findByPk(req.params.id);
+    const task = await TaskModel.findByPk(req.params.id, {
+      include: [{ model: UserModel, as: "author", attributes: ["id", "name", "email"] }]
+    });
+
     if (task) {
       return res.status(200).json(task);
     } else {
@@ -45,6 +57,7 @@ export const getTaskById = async (req, res) => {
     return res.status(500).json({ message: "Hubo un error al buscar la tarea" });
   }
 };
+
 
 export const updateTask = async (req, res) => {
   const { title, description, isComplete } = req.body;

@@ -8,12 +8,12 @@ import {
   deleteUser,
 } from "../controllers/user.controllers.js";
 
-const routes = express.Router();
+const userRoutes = express.Router();
 
-routes.post("/", createUser);
-routes.get("/", getAllUsers);
-routes.get("/:id", getUserById);
-routes.put("/:id", updateUser);
-routes.delete("/:id", deleteUser);
+userRoutes.post("/", createUser);
+userRoutes.get("/", getAllUsers);
+userRoutes.get("/:id", getUserById);
+userRoutes.put("/:id", updateUser);
+userRoutes.delete("/:id", deleteUser);
 
-export default routes;
+export default userRoutes;

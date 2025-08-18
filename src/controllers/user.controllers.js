@@ -61,8 +61,15 @@ export const createUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
   try {
     const users = await modelUser.findAll({
-      attributes: ["id", "name", "email", "createdAt"], // no exponemos password
+      attributes: ["id", "name", "email", "createdAt"], // no se muestra la contra
       order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: TaskModel,       // incluimos las tareas asociadas
+          as: "tasks",            
+          attributes: ["id", "title", "description", "isComplete"] 
+        }
+      ]
     });
 
     if (!users || users.length === 0) {
@@ -86,7 +93,14 @@ export const getUserById = async (req, res) => {
     }
 
     const user = await modelUser.findByPk(userId, {
-      attributes: ["id", "name", "email", "createdAt"], // nunca devolvemos password
+      attributes: ["id", "name", "email", "createdAt"],
+      include: [
+        {
+          model: TaskModel,      
+          as: "tasks",
+          attributes: ["id", "title", "description", "isComplete"]
+        }
+      ]
     });
 
     if (!user) {

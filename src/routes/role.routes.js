@@ -1,18 +1,13 @@
 import express from "express";
+
 import {
   createRole,
   getAllRoles,
-  getRoleById,
-  updateRole,
-  deleteRole
-} from "../controllers/role.controller.js";
+} from "../controllers/role.controllers.js";
 
-const routes = express.Router();
+const rolesRoutes = express.Router();
 
-routes.post("/", createRole);
-routes.get("/", getAllRoles);
-routes.get("/:id", getRoleById);
-routes.put("/:id", updateRole);
-routes.delete("/:id", deleteRole);
+rolesRoutes.post("/", createRole);
+rolesRoutes.get("/", getAllRoles);
 
-export default routes;
+export default rolesRoutes;

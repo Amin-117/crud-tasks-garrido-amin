@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/database.js";
-import TaskModel from "./task.model.js"; 
+import sequelize from "../config/database.js";
 
 export const UserModel = sequelize.define(
   "User",
@@ -30,7 +29,6 @@ export const UserModel = sequelize.define(
   }
 );
 
-UserModel.hasMany(TaskModel, { foreignKey: "user_id", as: "tasks" });
 
 export default UserModel;
 

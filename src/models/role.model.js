@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/database.js";
-import { UserModel } from "./user.model.js";
+import sequelize from "../config/database.js";
+import UserModel from "./user.models.js";
 
 export const RoleModel = sequelize.define(
   "role",
@@ -17,7 +17,7 @@ export const RoleModel = sequelize.define(
   },
   {
     tableName: "roles",
-    timestamps: true,
+    timestamps: false,
   }
 );
 

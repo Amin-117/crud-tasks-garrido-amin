@@ -26,6 +26,7 @@ export const UserModel = sequelize.define(
   {
     timestamps: false, 
     tableName: "users",
+    paranoid: true
   }
 );
 

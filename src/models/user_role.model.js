@@ -15,6 +15,7 @@ export const UserRoleModel = sequelize.define(
   },
   {
     timestamps: false,
+    paranoid: true,
   }
 );
 

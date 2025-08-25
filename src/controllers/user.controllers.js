@@ -203,4 +203,3 @@ export const deleteUser = async (req, res) => {
     return res.status(500).json({ message: "Hubo un error al eliminar el usuario" });
   }
 };
-

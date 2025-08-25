@@ -18,6 +18,7 @@ export const RoleModel = sequelize.define(
   {
     tableName: "roles",
     timestamps: false,
+    paranoid: true,
   }
 );
 

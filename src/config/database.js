@@ -15,14 +15,15 @@ const sequelize = new Sequelize(
 
 export default sequelize;
 
-export const initDB = async () =>{
-    try{
-        sequelize.authenticate();
+export const initDB = async () => {
+    try {
+        await sequelize.authenticate(); // Espera la conexión
         console.log("Conectado a la base de datos");
-        sequelize.sync();
+        await sequelize.sync(); // Espera que se sincronicen las tablas
     } catch(error) {
-        console.error("error al conectarse a la base de datos")
-    };
+        console.error("Error al conectarse a la base de datos", error);
+    }
 };
+
 
 

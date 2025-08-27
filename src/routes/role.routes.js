@@ -8,12 +8,12 @@ import {
   deleteRoleValidation 
 } from "../middlewares/validations/role.validation.js";
 
-const router = Router();
+const rolesRoutes = Router();
 
-router.post("/", createRoleValidation, validator, createRole);
-router.get("/", getRoles);
-router.get("/:id", getRoleByIdValidation, validator, getRoleById);
-router.put("/:id", updateRoleValidation, validator, updateRole);
-router.delete("/:id", deleteRoleValidation, validator, deleteRole);
+rolesRoutes.post("/", createRoleValidation, validator, createRole);
+rolesRoutes.get("/", getRoles);
+rolesRoutes.get("/:id", getRoleByIdValidation, validator, getRoleById);
+rolesRoutes.put("/:id", updateRoleValidation, validator, updateRole);
+rolesRoutes.delete("/:id", deleteRoleValidation, validator, deleteRole);
 
-export default router;
+export default rolesRoutes;

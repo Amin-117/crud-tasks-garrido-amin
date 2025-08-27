@@ -9,12 +9,12 @@ import {
   getProfilesValidation
 } from "../middlewares/validations/profile.validation.js";
 
-const router = Router();
+const ProfileRoutes = Router();
 
-router.post("/", createProfileValidation, validator, createProfile);
-router.get("/", getProfilesValidation, validator, getProfiles);
-router.get("/:id", getProfileValidation, validator, getProfileById);
-router.put("/:id", updateProfileValidation, validator, updateProfile);
-router.delete("/:id", deleteProfileValidation, validator, deleteProfile);
+ProfileRoutes.post("/", createProfileValidation, validator, createProfile);
+ProfileRoutes.get("/", getProfilesValidation, validator, getProfiles);
+ProfileRoutes.get("/:id", getProfileValidation, validator, getProfileById);
+ProfileRoutes.put("/:id", updateProfileValidation, validator, updateProfile);
+ProfileRoutes.delete("/:id", deleteProfileValidation, validator, deleteProfile);
 
-export default router;
+export default ProfileRoutes;

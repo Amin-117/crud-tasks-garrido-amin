@@ -8,12 +8,12 @@ import {
   deleteTaskValidation 
 } from "../middlewares/validations/task.validation.js";
 
-const router = Router();
+const taskRoutes = Router();
 
-router.post("/", createTaskValidation, validator, createTask);
-router.get("/", getTasks);
-router.get("/:id", getTaskByIdValidation, validator, getTaskById);
-router.put("/:id", updateTaskValidation, validator, updateTask);
-router.delete("/:id", deleteTaskValidation, validator, deleteTask);
+taskRoutes.post("/", createTaskValidation, validator, createTask);
+taskRoutes.get("/", getTasks);
+taskRoutes.get("/:id", getTaskByIdValidation, validator, getTaskById);
+taskRoutes.put("/:id", updateTaskValidation, validator, updateTask);
+taskRoutes.delete("/:id", deleteTaskValidation, validator, deleteTask);
 
-export default router;
+export default taskRoutes;

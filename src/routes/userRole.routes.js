@@ -1,14 +1,19 @@
-import express from "express";
+import { Router } from "express";
+import { createUserRole, getUserRoles, getUserRoleById, updateUserRole, deleteUserRole } from "../controllers/userRole.controller.js";
+import { validator } from "../middlewares/validator.js";
+import { 
+  createUserRoleValidation, 
+  updateUserRoleValidation, 
+  getUserRoleValidation, 
+  deleteUserRoleValidation 
+} from "../middlewares/validations/userRole.validation.js";
 
-import {
-  assignRoleToUser,
-  getAllUserRoles
-} from "../controllers/userRole.controller.js";
+const router = Router();
 
-const userRoleRoutes = express.Router();
+router.post("/", createUserRoleValidation, validator, createUserRole);
+router.get("/", getUserRoles);
+router.get("/:id", getUserRoleValidation, validator, getUserRoleById);
+router.put("/:id", updateUserRoleValidation, validator, updateUserRole);
+router.delete("/:id", deleteUserRoleValidation, validator, deleteUserRole);
 
-userRoleRoutes.post("/", assignRoleToUser);
-
-userRoleRoutes.get("/", getAllUserRoles);
-
-export default userRoleRoutes;
+export default router;

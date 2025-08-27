@@ -1,19 +1,19 @@
-import express from "express";
+import { Router } from "express";
+import { createUser, getUsers, getUserById, updateUser, deleteUser } from "../controllers/user.controller.js";
+import { validator } from "../middlewares/validator.js";
+import { 
+  createUserValidation, 
+  updateUserValidation, 
+  getUserByIdValidation, 
+  deleteUserValidation 
+} from "../middlewares/validations/user.validation.js";
 
-import {
-  createUser,
-  getAllUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
-} from "../controllers/user.controllers.js";
+const router = Router();
 
-const userRoutes = express.Router();
+router.post("/", createUserValidation, validator, createUser);
+router.get("/", getUsers);
+router.get("/:id", getUserByIdValidation, validator, getUserById);
+router.put("/:id", updateUserValidation, validator, updateUser);
+router.delete("/:id", deleteUserValidation, validator, deleteUser);
 
-userRoutes.post("/", createUser);
-userRoutes.get("/", getAllUsers);
-userRoutes.get("/:id", getUserById);
-userRoutes.put("/:id", updateUser);
-userRoutes.delete("/:id", deleteUser);
-
-export default userRoutes;
+export default router;

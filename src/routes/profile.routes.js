@@ -1,13 +1,20 @@
-import express from "express";
+import { Router } from "express";
+import { createProfile, getProfiles, getProfileById, updateProfile, deleteProfile } from "../controllers/profile.controller.js";
+import { validator } from "../middlewares/validator.js";
+import { 
+  createProfileValidation, 
+  updateProfileValidation, 
+  getProfileValidation, 
+  deleteProfileValidation, 
+  getProfilesValidation
+} from "../middlewares/validations/profile.validation.js";
 
-import {
-  createProfile,
-  getAllProfiles,
-} from "../controllers/profile.controller.js";
+const router = Router();
 
-const profileRoutes = express.Router();
+router.post("/", createProfileValidation, validator, createProfile);
+router.get("/", getProfilesValidation, validator, getProfiles);
+router.get("/:id", getProfileValidation, validator, getProfileById);
+router.put("/:id", updateProfileValidation, validator, updateProfile);
+router.delete("/:id", deleteProfileValidation, validator, deleteProfile);
 
-profileRoutes.post("/", createProfile);
-profileRoutes.get("/", getAllProfiles);
-
-export default profileRoutes;
+export default router;

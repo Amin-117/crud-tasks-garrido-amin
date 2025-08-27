@@ -1,4 +1,4 @@
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 import { ProfileModel } from "../../models/profile.model.js";
 import UserModel from "../../models/user.models.js";
 
@@ -11,7 +11,11 @@ export const createProfileValidation = [
     .custom(async (value) => {
       const user = await UserModel.findByPk(value);
       if (!user) {
-        throw new Error("El usuario no existe");
+        throw new Error("No existe ningún usuario con ese id");
+      }
+      const existingProfile = await ProfileModel.findOne({ where: { user_id: value } });
+      if (existingProfile) {
+        throw new Error("Este usuario ya tiene un perfil asociado");
       }
     }),
   body("bio")
@@ -22,8 +26,8 @@ export const createProfileValidation = [
     .withMessage("El bio no debe superar los 255 caracteres"),
   body("avatar_url")
     .optional()
-    .isString()
-    .withMessage("El campo avatar_url debe ser una cadena de texto")
+    .isURL()
+    .withMessage("El avatar_url debe ser una URL válida")
     .isLength({ max: 255 })
     .withMessage("El avatar_url no debe superar los 255 caracteres"),
 ];
@@ -31,11 +35,11 @@ export const createProfileValidation = [
 export const updateProfileValidation = [
   param("id")
     .isInt()
-    .withMessage("El id debe ser un entero")
+    .withMessage("El id debe ser un número entero")
     .custom(async (value) => {
       const profile = await ProfileModel.findByPk(value);
       if (!profile) {
-        throw new Error("El perfil no existe");
+        throw new Error("No existe ningún perfil con ese id");
       }
     }),
   body("bio")
@@ -46,8 +50,33 @@ export const updateProfileValidation = [
     .withMessage("El bio no debe superar los 255 caracteres"),
   body("avatar_url")
     .optional()
-    .isString()
-    .withMessage("El campo avatar_url debe ser una cadena de texto")
+    .isURL()
+    .withMessage("El avatar_url debe ser una URL válida")
     .isLength({ max: 255 })
     .withMessage("El avatar_url no debe superar los 255 caracteres"),
-    ];
+];
+
+export const getProfileValidation = [
+  param("id")
+    .isInt()
+    .withMessage("El id debe ser un número entero")
+    .custom(async (value) => {
+      const profile = await ProfileModel.findByPk(value);
+      if (!profile) {
+        throw new Error("No existe ningún perfil con ese id");
+      }
+    }),
+];
+
+export const deleteProfileValidation = [
+  param("id")
+    .isInt()
+    .withMessage("El id debe ser un número entero")
+    .custom(async (value) => {
+      const profile = await ProfileModel.findByPk(value);
+      if (!profile) {
+        throw new Error("No existe ningún perfil con ese id");
+      }
+    }),
+];
+
